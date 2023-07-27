@@ -11,29 +11,30 @@ import validateRequestBody from "../middlewares/validateBody.middleware";
 import { contactRequestSchema } from "../schemas/contact.schemas";
 import verifyContactEmail from "../middlewares/verifyContactId.middleware";
 import verifyEmailAndPhoneContact from "../middlewares/verifyEmailAndPhoneContact.middleware";
+import verifyOwner from "../middlewares/verifyOwner.middleware";
 
 const contactRouter: Router = Router();
 
-contactRouter.use(validateToken);
+contactRouter.use(validateToken, verifyOwner);
 
 contactRouter.post(
-  "",
+  "/:id",
   validateRequestBody(contactRequestSchema),
   createContactController
 );
 
-contactRouter.get("", getAllContactsControllers);
+contactRouter.get("/:id", getAllContactsControllers);
 
 contactRouter.use(verifyContactEmail);
 
-contactRouter.get("/:email", getUserContactController);
+contactRouter.get("/:id/:email", getUserContactController);
 
 contactRouter.patch(
-  "/:email",
+  "/:id/:email",
   verifyEmailAndPhoneContact,
   updateUserContactController
 );
 
-contactRouter.delete("/:email", deleteUserContactController);
+contactRouter.delete("/:id/:email", deleteUserContactController);
 
 export default contactRouter;
