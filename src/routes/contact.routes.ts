@@ -1,15 +1,39 @@
 import { Router } from "express";
+import validateToken from "../middlewares/validateToken.middleware";
+import {
+  createContactController,
+  deleteUserContactController,
+  getAllContactsControllers,
+  getUserContactController,
+  updateUserContactController,
+} from "../controllers/contact.controller";
+import validateRequestBody from "../middlewares/validateBody.middleware";
+import { contactRequestSchema } from "../schemas/contact.schemas";
+import verifyContactEmail from "../middlewares/verifyContactId.middleware";
+import verifyEmailAndPhoneContact from "../middlewares/verifyEmailAndPhoneContact.middleware";
 
 const contactRouter: Router = Router();
 
-contactRouter.post("");
+contactRouter.use(validateToken);
 
-contactRouter.get("");
+contactRouter.post(
+  "",
+  validateRequestBody(contactRequestSchema),
+  createContactController
+);
 
-contactRouter.get("/:id");
+contactRouter.get("", getAllContactsControllers);
 
-contactRouter.patch("/:id");
+contactRouter.use(verifyContactEmail);
 
-contactRouter.delete("/:id");
+contactRouter.get("/:email", getUserContactController);
+
+contactRouter.patch(
+  "/:email",
+  verifyEmailAndPhoneContact,
+  updateUserContactController
+);
+
+contactRouter.delete("/:email", deleteUserContactController);
 
 export default contactRouter;

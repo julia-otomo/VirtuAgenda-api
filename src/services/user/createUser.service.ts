@@ -17,6 +17,7 @@ const createUserService = async (
   const userDetails: UserDetails = userDetailsRepository.create({
     email: email,
     phone: phone,
+    contactTitle: `${rest.name}: Main Information`,
   });
 
   await userDetailsRepository.save(userDetails);
