@@ -55,7 +55,7 @@ const deleteUserController = async (
 
   await deleteUserService(userId);
 
-  return response.status(204);
+  return response.status(204).send();
 };
 
 const createUserDetailsController = async (
@@ -99,7 +99,7 @@ const deleteUserDetailsController = async (
 
   await deleteUserDetailsService(contactTitle, userId);
 
-  return response.status(204);
+  return response.status(204).send();
 };
 
 export {

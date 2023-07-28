@@ -65,7 +65,7 @@ const deleteUserContactController = async (
 
   await deleteUserContactService(contactEmail, userId);
 
-  return response.status(204);
+  return response.status(204).send();
 };
 
 export {
