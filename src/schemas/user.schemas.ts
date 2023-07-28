@@ -47,6 +47,7 @@ const userLoginSchema = z.object({
 
 const tokenSchema = z.object({
   token: z.string(),
+  user: userSchema,
 });
 
 export {

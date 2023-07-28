@@ -29,7 +29,12 @@ const loginService = async (requestBody: TUserLogin): Promise<TToken> => {
     }
   );
 
-  return { token };
+  const responseUser = {
+    token: token,
+    user: findUser!.user,
+  };
+
+  return responseUser;
 };
 
 export default loginService;
