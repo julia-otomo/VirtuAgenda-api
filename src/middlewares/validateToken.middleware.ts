@@ -22,7 +22,7 @@ const validateToken = (
     }
 
     response.locals.user = {
-      id: Number(decoded.sub),
+      id: decoded.sub,
       admin: decoded.admin,
     };
   });

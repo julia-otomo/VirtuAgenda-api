@@ -21,6 +21,9 @@ const updateUserDetailsService = async (
     where: {
       id: userId,
     },
+    relations: {
+      details: true,
+    },
   });
 
   let userDetails: UserDetails | null = await userDetailsRepository.findOne({
@@ -39,7 +42,14 @@ const updateUserDetailsService = async (
 
   await userDetailsRepository.save(userDetails!);
 
-  const validatedUser: TUserResponse = userResponseSchema.parse(user!);
+  const updatedUser: TUser = {
+    ...user!,
+    details: user!.details.map((detail) =>
+      detail.id === userDetails!.id ? userDetails! : detail
+    ),
+  };
+
+  const validatedUser: TUserResponse = userResponseSchema.parse(updatedUser);
 
   return validatedUser;
 };

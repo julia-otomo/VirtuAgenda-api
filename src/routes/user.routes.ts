@@ -29,22 +29,24 @@ userRouter.post(
   createUserController
 );
 
-userRouter.use(validateToken, verifyOwner);
+userRouter.use(validateToken);
 
-userRouter.get("/:id", verifyId, getUserController);
+userRouter.get("/:id", verifyOwner, verifyId, getUserController);
 
 userRouter.patch(
   "/:id",
+  verifyOwner,
   validateRequestBody(userRequestSchema.partial()),
   verifyId,
   verifyEmailAndPhone,
   updateUserController
 );
 
-userRouter.delete("/:id", verifyId, deleteUserController);
+userRouter.delete("/:id", verifyOwner, verifyId, deleteUserController);
 
 userRouter.post(
   "/:id/details",
+  verifyOwner,
   validateRequestBody(createUserDetailsRequestSchema),
   verifyEmailAndPhone,
   createUserDetailsController
@@ -52,6 +54,7 @@ userRouter.post(
 
 userRouter.patch(
   "/:id/details/:contactTitle",
+  verifyOwner,
   validateRequestBody(userDetailsUpdateRequestSchema),
   verifyContactTitle,
   verifyEmailAndPhone,
@@ -60,6 +63,7 @@ userRouter.patch(
 
 userRouter.delete(
   "/:id/details/:contactTitle",
+  verifyOwner,
   verifyContactTitle,
   deleteUserDetailsController
 );

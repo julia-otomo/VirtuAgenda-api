@@ -6,10 +6,10 @@ const verifyOwner = async (
   response: Response,
   next: NextFunction
 ): Promise<void> => {
-  const reponseUserId: string = response.locals.user.id;
+  const responseUserId: string = response.locals.user.id;
   const requestUserId: string = request.params.id;
 
-  if (reponseUserId !== requestUserId) {
+  if (responseUserId != requestUserId) {
     throw new AppError("Insufficient permission", 403);
   }
 

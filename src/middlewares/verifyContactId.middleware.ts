@@ -2,17 +2,18 @@ import { NextFunction, Request, Response, response } from "express";
 import { Repository } from "typeorm";
 import { User } from "../entities";
 import { AppDataSource } from "../data-source";
-
 import AppError from "../error";
 import { TContact } from "../interfaces/contact.interfaces";
 
 const verifyContactEmail = async (
   request: Request,
-  reponse: Response,
+  response: Response,
   next: NextFunction
 ): Promise<void> => {
   const contactEmail: string = request.params.email;
   const userId: string = response.locals.user.id;
+
+  console.log(userId);
 
   const userRepository: Repository<User> = AppDataSource.getRepository(User);
 

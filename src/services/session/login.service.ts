@@ -6,13 +6,13 @@ import { sign } from "jsonwebtoken";
 import "dotenv/config";
 
 const loginService = async (requestBody: TUserLogin): Promise<TToken> => {
-  const email: string = requestBody.email;
+  const email: string | undefined | null = requestBody.email;
 
   const userDetailsRepository: Repository<UserDetails> =
     AppDataSource.getRepository(UserDetails);
 
   const findUser: UserDetails | null = await userDetailsRepository.findOne({
-    where: { email: email },
+    where: { email: email! },
     relations: {
       user: true,
     },
