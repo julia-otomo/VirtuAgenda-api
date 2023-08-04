@@ -14,7 +14,9 @@ const loginService = async (requestBody: TUserLogin): Promise<TToken> => {
   const findUser: UserDetails | null = await userDetailsRepository.findOne({
     where: { email: email! },
     relations: {
-      user: true,
+      user: {
+        details: true,
+      },
     },
   });
 
